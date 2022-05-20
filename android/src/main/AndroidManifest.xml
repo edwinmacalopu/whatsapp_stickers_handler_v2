@@ -1,0 +1,26 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.indiagenisys.whatsapp_stickers_handler_v2">
+
+    <application
+        android:name="io.flutter.app.FlutterApplication"
+        android:allowBackup="false"
+        android:fullBackupContent="false"
+        tools:ignore="GoogleAppIndexingWarning">
+
+        <provider
+            android:name=".provider.StickerContentProvider"
+            android:authorities="${applicationId}.stickercontentprovider"
+            android:enabled="true"
+            android:exported="true"
+            android:readPermission="com.whatsapp.sticker.READ" />
+    </application>
+
+    <!-- to be able to query the whitelist status in WhatsApp
+     https://developer.android.com/training/basics/intents/package-visibility#package-name -->
+    <queries>
+        <package android:name="com.whatsapp" />
+        <package android:name="com.whatsapp.w4b" />
+    </queries>
+
+</manifest>
