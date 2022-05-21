@@ -8,9 +8,9 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 mixin constants {
   static String baseUrl =
-      "https://mandj.sfo2.cdn.digitaloceanspaces.com/christmas-stickers/";
+      "https://mandj.sfo2.cdn.digitaloceanspaces.com/stickers_test/";
   static String fileName = "remote_sticker_packs.json";
-  static String remoteFileName = "sticker_packs.json";
+  static String remoteFileName = "contents.json";
 }
 
 void main() {
