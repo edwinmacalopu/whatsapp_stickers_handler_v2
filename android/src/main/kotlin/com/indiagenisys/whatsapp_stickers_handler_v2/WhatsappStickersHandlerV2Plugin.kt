@@ -13,10 +13,6 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.PluginRegistry
-import jdk.internal.net.http.common.Log.channel
-import android.content.SharedPreferences
-import android.preference.PreferenceManager
-
 
 /**
  * WhatsappStickersHandlerV2Plugin
@@ -73,9 +69,7 @@ class WhatsappStickersHandlerV2Plugin : FlutterPlugin, MethodCallHandler, Activi
                 }
             }
             "addStickerPackToWhatsApp" -> {
-                val preferences: SharedPreferences = getSharedPreferences(PreferenceManager.getDefaultSharedPreferences(context), 0)
-                preferences.edit().remove("sticker_pack").commit()
-
+                stickerPacks = ArrayList<StickerPack>()
                 Log.d("DEBUG",
                     call.argument<Any>("identifier").toString() + " " + call.argument("name") + " " +
                             call.argument("publisher") + " " + call.argument("trayimagefile") + " " +
@@ -128,9 +122,7 @@ class WhatsappStickersHandlerV2Plugin : FlutterPlugin, MethodCallHandler, Activi
                     stickerPack.setIosAppStoreLink("")
                     stickerPack.setStickers(stickers)
                     stickerPacks.add(stickerPack)
-
-                    preferences.edit().remove("sticker_pack").commit()
-                    preferences.edit().put("sticker_pack", stickerPacks).commit()
+                    Stash.put("sticker_pack", stickerPacks)
 
                     val intent = createIntentToAddStickerPack(authority, stickerPackIdentifier, stickerPackName)
 
