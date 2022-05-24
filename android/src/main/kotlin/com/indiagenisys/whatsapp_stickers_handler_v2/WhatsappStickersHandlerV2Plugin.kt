@@ -13,6 +13,10 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.PluginRegistry
+import jdk.internal.net.http.common.Log.channel
+
+
+
 
 /**
  * WhatsappStickersHandlerV2Plugin
@@ -32,7 +36,6 @@ class WhatsappStickersHandlerV2Plugin : FlutterPlugin, MethodCallHandler, Activi
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "whatsapp_stickers_handler_v2")
         channel!!.setMethodCallHandler(this)
-        Stash.clearAll();
     }
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
@@ -70,8 +73,8 @@ class WhatsappStickersHandlerV2Plugin : FlutterPlugin, MethodCallHandler, Activi
                 }
             }
             "addStickerPackToWhatsApp" -> {
-
-                Stash.clearAll();
+                val preferences: SharedPreferences = getSharedPreferences(PreferenceManager.getDefaultSharedPreferences(context), 0)
+                preferences.edit().remove("sticker_pack").commit()
 
                 Log.d("DEBUG",
                     call.argument<Any>("identifier").toString() + " " + call.argument("name") + " " +
@@ -125,7 +128,9 @@ class WhatsappStickersHandlerV2Plugin : FlutterPlugin, MethodCallHandler, Activi
                     stickerPack.setIosAppStoreLink("")
                     stickerPack.setStickers(stickers)
                     stickerPacks.add(stickerPack)
-                    Stash.put("sticker_pack", stickerPacks)
+
+                    preferences.edit().remove("sticker_pack").commit()
+                    preferences.edit().put("sticker_pack", stickerPacks).commit()
 
                     val intent = createIntentToAddStickerPack(authority, stickerPackIdentifier, stickerPackName)
 
