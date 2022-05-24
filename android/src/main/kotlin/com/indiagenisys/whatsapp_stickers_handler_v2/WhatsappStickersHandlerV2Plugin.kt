@@ -113,7 +113,7 @@ class WhatsappStickersHandlerV2Plugin : FlutterPlugin, MethodCallHandler, Activi
                     val ws = WhitelistCheck.isWhatsAppConsumerAppInstalled(context?.packageManager)
                     if (!(ws || WhitelistCheck.isWhatsAppSmbAppInstalled(context?.packageManager))) {
                         result?.error("whatsapp_not_found", "whatsapp_not_found", "")
-                        //throw InvalidPackException(InvalidPackException.OTHER, "WhatsApp is not installed on target device!")
+                        throw InvalidPackException(InvalidPackException.OTHER, "WhatsApp is not installed on target device!")
                     }
                     val stickerPackIdentifier = stickerPack.identifier
                     val stickerPackName = stickerPack.name
