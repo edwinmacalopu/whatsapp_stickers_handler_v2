@@ -70,6 +70,9 @@ class WhatsappStickersHandlerV2Plugin : FlutterPlugin, MethodCallHandler, Activi
                 }
             }
             "addStickerPackToWhatsApp" -> {
+
+                Stash.clearAll();
+
                 Log.d("DEBUG",
                     call.argument<Any>("identifier").toString() + " " + call.argument("name") + " " +
                             call.argument("publisher") + " " + call.argument("trayimagefile") + " " +
