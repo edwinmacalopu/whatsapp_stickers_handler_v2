@@ -175,18 +175,14 @@ class WhatsappStickersHandlerV2Plugin : FlutterPlugin, MethodCallHandler, Activi
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
-        if(result == null){
-            Log.e("DEBUG", "RESULT IS NULL");
-        }else{
-            Log.e("DEBUG", "RESULT IS NOT NULL");
-        }
-
         if (requestCode == 200) {
             if (resultCode == Activity.RESULT_CANCELED) {
                 if (data != null) {
                     val validationError = data.getStringExtra("validation_error")
                     if (validationError != null) {
                         result?.error("error", validationError, "")
+                    }else{
+                        result?.error("error", "other", "Other error")
                     }
                 } else {
                     result?.error("cancelled", "cancelled", "")
